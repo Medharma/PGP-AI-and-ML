@@ -1,0 +1,134 @@
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+class Bank:
+    IFSC_Code="000HDFC998899"
+    bankname="HDFC" 
+    branchname="Railway Road, Aligarh"
+    loc=10000
+    
+    def __init__(self,IFSC_Code,bankname,branchname,loc):
+        self.IFSC_Code=IFSC_Code
+        self.bankname=bankname
+        self.branchname=branchname
+        self.loc=loc
+
+bank_details=Bank("000HDFC998899",'HDFC','Railway Road, Aligarh',10000)    
+print('Customer Details:') 
+print('IFSC Code: ',bank_details.IFSC_Code)
+print('Bank Name: ', bank_details.bankname) 
+print("Branch Name: " , bank_details.branchname) 
+print('Limit of Credit: ', bank_details.loc) 
+
+
+     
+
+class Customer:
+    CustomerID=12345678
+    customername="Mr. Max Stellar" 
+    address="Railway Road, Aligarh"
+    contactdetails='+91 1234567890'
+    
+    def __init__(self,CustomerID,customername,address,contactdetails):
+        self.CustomerID=CustomerID
+        self.customername=customername
+        self.address=address
+        self.contactdetails=contactdetails
+
+Customer1=Customer(12345678,'Mr. Max Stellar','Railway Road, Aligarh','+91 1234567890')    
+print('Customer Details:') 
+print('CustomerID code: ',Customer1.CustomerID)
+print('Customer Name: ', Customer1.customername) 
+print("Customer's Address: " , Customer1.address) 
+print('Contact Details: ', Customer1.contactdetails) 
+
+
+class Account(Bank):
+    
+    def __init__(self,Cust,IFSC_Code,bankname,branchname,loc):
+        super().__init__(IFSC_Code,bankname,branchname,loc)
+        self.Cust=Cust
+        self.balance=1000    
+        print("\n Hello! Welcome to the Deposit and Withdrawal Portal")
+    def getAccountInfo(self):
+        print('Account Holder:', self.Cust, '\n IFSC Code:', self.IFSC_Code, '\n Bank Name:' ,self.bankname, '\nBranch Name:',self.branchname, '\n Limit of Credit:',self.loc)
+    
+    def deposit(self,active):
+        self.active=active
+        if self.active=='true':
+           amount=float(input('Enter amount to be deposited: '))
+           self.amount=amount
+           self.balance +=amount
+           print("\n Amount Deposited:",amount)
+        else: 
+            print('Account is not active')
+    def withdraw(self):
+        amount=float(input('Enter amount to be withdraw:'))
+        self.amount=amount
+        if self.balance>=amount:
+            self.balance-=amount
+            print('\n You Withdrew:',amount)
+        else:
+            print('\n Insufficient Balance in the account:')     
+    def getbalance(self):
+        print('\n Net Availaible Balance=',self.balance)
+        
+a=Account('Spock','000HDFC998899','HDFC',"Railway Road, Aligarh",10000)
+a.getAccountInfo()
+a.deposit('true')
+a.withdraw()
+a.getbalance()
+     
+   
+class SavingsAccount(Account):
+    def __init__(self,cbalance,Cust,IFSC_Code,bankname,branchname,loc):
+        self.cbalance=cbalance
+        
+        super().__init__(Cust,IFSC_Code,bankname,branchname,loc)
+        self.SMinBalance=2000
+        print("\n Hello! Welcome to the Saving Accounts Window")
+    def getSavingAccountInfo(self):
+        print('\n Account Holder:', self.Cust, '\n IFSC Code:', self.IFSC_Code, '\n Bank Name:' ,self.bankname, '\nBranch Name:' ,self.branchname, '\n Limit of Credit:', self.loc,'\n Minimum Saving Account Balance needed: ', self.SMinBalance, '\n Your Current Balance: ', self.cbalance)
+        
+        
+    def sdeposit(self,active):
+        if self.cbalance>=self.SMinBalance:
+            
+           self.active=active
+           if self.active=='true':
+         
+                 samount=float(input('Enter amount to be deposited: '))
+                 self.samount=samount
+                 self.cbalance +=samount
+                 print("\n Amount Deposited:",samount)
+                 print(self.cbalance)
+           else: 
+               print('Account is not active')
+        else: 
+             print('Your Saving account has lower balance than the minimum \n amount required to keep the account active')
+                
+    def swithdraw(self):
+        print('current b:', self.cbalance)
+        
+        samount=float(input('Enter amount to be withdraw:'))
+        if self.cbalance>=self.SMinBalance:
+             self.samount=samount
+             if self.cbalance>=samount:
+                 self.cbalance-=samount
+                 print('\n You Withdrew:',samount)
+                 print(self.cbalance)
+             else:
+                 print('\n Insufficient Balance in the account:')     
+        else:
+            print('Your Saving account has lower balance than the minimum \n amount required to keep the account active')
+    def getbalance(self):
+        print('\n Net Availaible Balance=',self.cbalance)
+
+s=SavingsAccount(5000,'Spock','000HDFC998899','HDFC',"Railway Road, Aligarh",10000)    
+s.getSavingAccountInfo()
+s.sdeposit('true')
+s.swithdraw()
+s.getbalance()
